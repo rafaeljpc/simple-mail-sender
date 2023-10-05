@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   mail:
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
@@ -6,6 +8,8 @@ spring:
     password: ${MAIL_PASSWORD}
     properties:
       mail:
+        from: ${MAIL_FROM_ADDRESS}
         smtp:
           auth: ${MAIL_SMTP_AUTH}
           starttls.enable: ${MAIL_SMTP_STARTTLS}
+          starttls.required: ${MAIL_SMTP_STARTTLS}
