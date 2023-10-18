@@ -49,6 +49,10 @@ dependencies {
     }
 }
 
+tasks.named<Jar>("jar") {
+    enabled = false
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
