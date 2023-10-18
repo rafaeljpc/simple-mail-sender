@@ -1,11 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.1.4"
-    id("io.spring.dependency-management") version "1.1.3"
     kotlin("jvm") version "1.9.10"
     kotlin("plugin.spring") version "1.9.10"
     kotlin("plugin.allopen") version "1.9.10"
+
+    id("org.springframework.boot") version "3.1.4"
+    id("io.spring.dependency-management") version "1.1.3"
 }
 
 group = "io.github.rafaeljpc"
@@ -49,17 +50,28 @@ dependencies {
     }
 }
 
-tasks.named<Jar>("jar") {
-    enabled = false
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
+}
+
+tasks.named<Jar>("jar") {
+    enabled = false
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.registering(JavaCompile::class) {
+    sourceCompatibility = JavaVersion.VERSION_17.toString()
+    targetCompatibility = JavaVersion.VERSION_17.toString()
+    options.encoding = "UTF-8"
+    options.compilerArgs = listOf("-Xlint:unchecked", "-Xlint:deprecation")
 }
